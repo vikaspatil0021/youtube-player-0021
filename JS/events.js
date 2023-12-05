@@ -1,6 +1,6 @@
 import { player } from "../index.js";
-import { fullScreenHandler, handleKeyEvents, miniPlayerHandler, playBackSpeedHandler, setDurationHandler, startTimeHandler, togglePlay, toggleVolumeBtn, volumeIconToggle, volumeSliderHandler } from "./functions.js";
-import { fullScreenBtn, miniPlayerBtn, playBackSpeedBtn, playPauseBtn, volumeBtn, volumeSlider } from "./instance.js";
+import { captionClickHandler, fullScreenHandler, handleKeyEvents, miniPlayerHandler, playBackSpeedHandler, setDurationHandler, startTimeHandler, togglePlay, toggleVolumeBtn, volumeIconToggle, volumeSliderHandler } from "./functions.js";
+import { captionBtn, fullScreenBtn, miniPlayerBtn, playBackSpeedBtn, playPauseBtn, volumeBtn, volumeSlider } from "./instance.js";
 
 // play/pause toggle
 player.on('click', togglePlay);
@@ -31,3 +31,11 @@ playBackSpeedBtn.addEventListener('click',playBackSpeedHandler);
 volumeBtn.addEventListener('click',toggleVolumeBtn);
 volumeSlider.addEventListener('input',volumeSliderHandler);
 player.on('volumechange',volumeIconToggle);
+
+
+// subtitle 
+captionBtn.addEventListener('click', captionClickHandler);
+player.on('loadedmetadata',captionClickHandler);
+
+
+

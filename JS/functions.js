@@ -1,5 +1,5 @@
 import { player } from "./../index.js";
-import { endTime, fullScreenBtn, playBackSpeedBtn, skipBackBtn, skipNextBtn, startTime, videoContainer, volumeBtn, volumeSlider } from "./instance.js";
+import { captionBtn, endTime, fullScreenBtn, myVideo, playBackSpeedBtn, skipBackBtn, skipNextBtn, startTime, videoContainer, volumeBtn, volumeSlider } from "./instance.js";
 
 // play / pause btn toggle
 function togglePlay() {
@@ -37,6 +37,9 @@ function handleKeyEvents(e) {
             break;
         case 'm':
             toggleVolumeBtn();
+            break;
+        case 'c':
+            captionClickHandler()
             break;
         default:
             break;
@@ -131,27 +134,39 @@ function toggleVolumeBtn() {
     volumeBtn.dataset.volumeLevel = !player.muted() ? "high" : "muted";
 }
 
-function volumeSliderHandler(e){
+function volumeSliderHandler(e) {
     player.volume(e.target.value);
     player.muted(e.target.value === 0);
 }
 
-function volumeIconToggle(e){
+function volumeIconToggle(e) {
     let volState;
     volumeSlider.value = player.volume();
 
-    if(player.muted() || player.volume()===0){
+    if (player.muted() || player.volume() === 0) {
         volumeSlider.value = 0;
         volState = 'muted'
-    }else if (player.volume() < 0.5){
+    } else if (player.volume() < 0.5) {
         volState = 'low'
-    }else{
+    } else {
         volState = 'high'
 
     }
     volumeBtn.dataset.volumeLevel = volState;
 
 }
+
+// caption on/off handler
+function captionClickHandler() {
+    if(captionBtn.classList.contains('show-caption')){
+        player.textTracks()[myVideo.dataset.currentSub].mode = 'disabled';
+        captionBtn.classList.remove('show-caption');
+    }else{
+        player.textTracks()[myVideo.dataset.currentSub].mode = 'showing';
+        captionBtn.classList.add('show-caption');
+    }
+}
+
 
 export {
     togglePlay,
@@ -163,5 +178,6 @@ export {
     playBackSpeedHandler,
     toggleVolumeBtn,
     volumeSliderHandler,
-    volumeIconToggle
+    volumeIconToggle,
+    captionClickHandler
 }

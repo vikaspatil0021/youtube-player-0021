@@ -1,4 +1,5 @@
 const videoContainer = document.querySelector('.video-container');
+const myVideo = document.querySelector('#my-video');
 const fullScreenBtn = document.querySelector('.full-screen-btn');
 const playPauseBtn = document.querySelector('.play-pause-btn');
 const miniPlayerBtn = document.querySelector('.mini-player-btn');
@@ -9,12 +10,14 @@ const endTime = document.querySelector('.duration-end-time');
 const playBackSpeedBtn = document.querySelector('.speed-btn');
 const volumeBtn = document.querySelector('.mute-btn');
 const volumeSlider = document.querySelector('.mute-btn-range');
+const captionBtn = document.querySelector('.captions-btn');
 
 
 
 
 export{
     videoContainer,
+    myVideo,
     fullScreenBtn,
     playPauseBtn,
     miniPlayerBtn,
@@ -24,5 +27,6 @@ export{
     endTime,
     playBackSpeedBtn,
     volumeBtn,
-    volumeSlider
+    volumeSlider,
+    captionBtn
 }

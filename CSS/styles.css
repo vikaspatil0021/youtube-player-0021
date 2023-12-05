@@ -7,7 +7,7 @@
 body {
   margin: 100px 0 0 0 ;
   display: flex;
-  background-color: black;
+  background-color: #000;
 
 }
 
@@ -19,15 +19,18 @@ body {
   justify-content: center;
   align-items: center;
   margin-inline: auto;
-  background-color: black;
-  box-shadow: -8px 10px 290px -64px rgba(255,255,255,0.63);
+  background-color: #000;
+  box-shadow: 0px 0px 100px -6px rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
 
 }
 
-video {
+video,#my-video {
   width: 100%;
+  border-radius: 15px;
   outline: none;
 }
+
 
 /* controls container */
 .controls-container {
@@ -38,17 +41,20 @@ video {
   opacity: 0;
   transition: opacity 300ms ease-in-out;
   padding: 5px 0;
+  
 }
 .controls-container::before {
   content: "";
   position: absolute;
   bottom: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, .75), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, .9), transparent);
   width: 100%;
-  aspect-ratio: 6 / 1;
+  aspect-ratio: 5 / 1;
   z-index: -1;
   pointer-events: none;
   transition: aspect-ratio 80ms ease-in-out;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 
 
@@ -79,6 +85,7 @@ video {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0px 5px;
 }
 
 
@@ -94,7 +101,7 @@ align-items: center;
 }
 
 /* control container hide and show on hover */
-.video-container:hover .controls-container{
+.video-container:not(:fullscreen):hover .controls-container{
   opacity: 1;
 }
 .video-container.paused .controls-container{
@@ -119,8 +126,8 @@ align-items: center;
   justify-content: center;
   align-items: center;
   color: white;
-  background: #1f1f1fcc;
-  border: none;
+  background: #585757d2;
+  border: .5px solid #545454;
   position: absolute;
   border-radius: 50%;
   z-index: 1;
@@ -198,8 +205,7 @@ align-items: center;
   justify-content: center;
   align-items: center;
   color: #f2f2f2;
-  background: #1f1f1fcc;
-  border: none;
+  background: #585757d2;
   position: absolute;
   border-radius: 50%;
   z-index: 1;
@@ -215,3 +221,24 @@ align-items: center;
   opacity: 1;
 }
 
+
+/* caption */
+.captions-btn{
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.red-underline{
+  position: absolute;
+  height: 3px;
+  width: calc(100% - 8px);
+  bottom: 0;
+  background-color: red;
+  opacity:0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.captions-btn.show-caption .red-underline{
+  opacity:1;
+}
