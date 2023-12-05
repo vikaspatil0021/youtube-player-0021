@@ -48,3 +48,4 @@ export const player = videojs(
 
 
 
+// https://www.nuevodevel.com/nuevo/showcase/captions-settings

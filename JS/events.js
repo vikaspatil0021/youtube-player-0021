@@ -1,6 +1,6 @@
 import { player } from "../index.js";
-import { captionClickHandler, fullScreenHandler, handleKeyEvents, miniPlayerHandler, playBackSpeedHandler, setDurationHandler, startTimeHandler, togglePlay, toggleVolumeBtn, volumeIconToggle, volumeSliderHandler } from "./functions.js";
-import { captionBtn, fullScreenBtn, miniPlayerBtn, playBackSpeedBtn, playPauseBtn, volumeBtn, volumeSlider } from "./instance.js";
+import { captionClickHandler, fullScreenHandler, handleKeyEvents, miniPlayerHandler, openSettings, playBackSpeedHandler, setDurationHandler, startTimeHandler, togglePlay, toggleVolumeBtn, volumeIconToggle, volumeSliderHandler } from "./functions.js";
+import { captionBtn, fullScreenBtn, miniPlayerBtn, playBackSpeedBtn, playPauseBtn, settingsBtn, volumeBtn, volumeSlider } from "./instance.js";
 
 // play/pause toggle
 player.on('click', togglePlay);
@@ -38,4 +38,6 @@ captionBtn.addEventListener('click', captionClickHandler);
 player.on('loadedmetadata',captionClickHandler);
 
 
+// settings icon
+settingsBtn.addEventListener('click',openSettings)
 

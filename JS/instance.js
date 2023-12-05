@@ -11,6 +11,8 @@ const playBackSpeedBtn = document.querySelector('.speed-btn');
 const volumeBtn = document.querySelector('.mute-btn');
 const volumeSlider = document.querySelector('.mute-btn-range');
 const captionBtn = document.querySelector('.captions-btn');
+const settingsBtn = document.querySelector('.settings-btn');
+
 
 
 
@@ -28,5 +30,6 @@ export{
     playBackSpeedBtn,
     volumeBtn,
     volumeSlider,
-    captionBtn
+    captionBtn,
+    settingsBtn
 }

@@ -1,5 +1,5 @@
 import { player } from "./../index.js";
-import { captionBtn, endTime, fullScreenBtn, myVideo, playBackSpeedBtn, skipBackBtn, skipNextBtn, startTime, videoContainer, volumeBtn, volumeSlider } from "./instance.js";
+import { captionBtn, endTime, fullScreenBtn, myVideo, playBackSpeedBtn, settingsBtn, skipBackBtn, skipNextBtn, startTime, videoContainer, volumeBtn, volumeSlider } from "./instance.js";
 
 // play / pause btn toggle
 function togglePlay() {
@@ -158,6 +158,11 @@ function volumeIconToggle(e) {
 
 // caption on/off handler
 function captionClickHandler() {
+    const length = player.textTracks().length;
+    if(length==0) {
+        captionBtn.disabled = true;
+        return;
+    }
     if(captionBtn.classList.contains('show-caption')){
         player.textTracks()[myVideo.dataset.currentSub].mode = 'disabled';
         captionBtn.classList.remove('show-caption');
@@ -165,6 +170,10 @@ function captionClickHandler() {
         player.textTracks()[myVideo.dataset.currentSub].mode = 'showing';
         captionBtn.classList.add('show-caption');
     }
+}
+
+function openSettings(){
+    settingsBtn.classList.toggle('open-box')
 }
 
 
@@ -179,5 +188,6 @@ export {
     toggleVolumeBtn,
     volumeSliderHandler,
     volumeIconToggle,
-    captionClickHandler
+    captionClickHandler,
+    openSettings
 }
