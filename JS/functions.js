@@ -223,14 +223,11 @@ function updateTimeline(e) {
         if (isMouseDown && e.type === 'mousemove') {
             changeCurrentTimeOnClick(e);
             timelineContainer.style.setProperty('--progess-position', preview_position);
-
         }
-    }
-    else if (e.type === 'mouseout') {
+    } else if (e.type === 'mouseout') {
         isMouseOver = false;
         preview_position = previewViaBuffer();
-    }
-    else if (e.type === 'mousedown') {
+    } else if (e.type === 'mousedown') {
         isMouseDown = true;
     } else if (e.type === 'mouseup') {
         isMouseDown = false;
