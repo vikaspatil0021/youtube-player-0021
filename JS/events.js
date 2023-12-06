@@ -1,5 +1,5 @@
 import { player } from "../index.js";
-import { captionClickHandler, fullScreenHandler, handleKeyEvents, manuallyUpdateTimeline, miniPlayerHandler, openSettings, playBackSpeedHandler, setDurationHandler, startTimeHandler, togglePlay, toggleVolumeBtn, updateTimeline, volumeIconToggle, volumeSliderHandler } from "./functions.js";
+import { captionClickHandler, fullScreenHandler, handleKeyEvents, miniPlayerHandler, openSettings, playBackSpeedHandler, setDurationHandler, startTimeHandler, togglePlay, toggleVolumeBtn, updateTimeline, volumeIconToggle, volumeSliderHandler } from "./functions.js";
 import { captionBtn, fullScreenBtn, miniPlayerBtn, playBackSpeedBtn, playPauseBtn, settingsBtn, timelineContainer, volumeBtn, volumeSlider } from "./instance.js";
 
 // play/pause toggle
@@ -44,7 +44,10 @@ settingsBtn.addEventListener('click',openSettings);
 
 // timeline preview and progress
 player.on('timeupdate',updateTimeline);
-
-timelineContainer.addEventListener('click',manuallyUpdateTimeline);  // preview track update
-timelineContainer.addEventListener('mousemove',manuallyUpdateTimeline);
+timelineContainer.addEventListener('click',updateTimeline);
+timelineContainer.addEventListener('mousemove',updateTimeline);
+timelineContainer.addEventListener('mouseover',updateTimeline);
 timelineContainer.addEventListener('mouseout',updateTimeline);
+
+timelineContainer.addEventListener('mousedown',updateTimeline);
+

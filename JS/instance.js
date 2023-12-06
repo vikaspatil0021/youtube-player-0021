@@ -1,5 +1,6 @@
 const videoContainer = document.querySelector('.video-container');
 const myVideo = document.querySelector('#my-video');
+const video = document.querySelector('video');
 const fullScreenBtn = document.querySelector('.full-screen-btn');
 const playPauseBtn = document.querySelector('.play-pause-btn');
 const miniPlayerBtn = document.querySelector('.mini-player-btn');
@@ -21,6 +22,7 @@ const timelineContainer = document.querySelector('.timeline-container');
 export{
     videoContainer,
     myVideo,
+    video,
     fullScreenBtn,
     playPauseBtn,
     miniPlayerBtn,

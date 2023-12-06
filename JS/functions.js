@@ -1,5 +1,5 @@
 import { player } from "./../index.js";
-import { captionBtn, endTime, fullScreenBtn, myVideo, playBackSpeedBtn, settingsBtn, skipBackBtn, skipNextBtn, startTime, timelineContainer, videoContainer, volumeBtn, volumeSlider } from "./instance.js";
+import { captionBtn, endTime, fullScreenBtn, myVideo, playBackSpeedBtn, settingsBtn, skipBackBtn, skipNextBtn, startTime, timelineContainer, video, videoContainer, volumeBtn, volumeSlider } from "./instance.js";
 
 // play / pause btn toggle
 function togglePlay() {
@@ -50,9 +50,11 @@ function handleKeyEvents(e) {
 function fullScreenHandler() {
     if (document.fullscreenElement === null) {
         videoContainer.requestFullscreen();
+        video.style.borderRadius = "0px";
         fullScreenBtn.classList.add('closed');
     } else {
         document.exitFullscreen();
+        video.style.borderRadius = "15px";
         fullScreenBtn.classList.remove('closed');
     }
 }
@@ -178,26 +180,64 @@ function openSettings() {
 
 
 // timeline
-function updateTimeline() {
+function previewViaBuffer() {
+    const bufferedRanges = player.buffered();
+    const percent = bufferedRanges.end(0) / player.duration();
+    return percent;
+}
+function progessTimeline() {
     const progress = player.currentTime() / player.duration();
     timelineContainer.style.setProperty('--progess-position', progress);
-
-    const bufferedRanges = player.buffered();
-    const preview = bufferedRanges.end(0) / player.duration();
-    timelineContainer.style.setProperty('--preview-position', preview);
-
 }
-
-function manuallyUpdateTimeline(e) {
+function previewViaMouseOverOrMove(e) {
     const rect = timelineContainer.getBoundingClientRect()
     const percent = (e.offsetX / rect.width);
-    if(e.type === 'click'){
-        player.currentTime(percent*player.duration());
-    }else if(e.type ==='mousemove'){
-        timelineContainer.style.setProperty('--preview-position', percent);
+    return percent;
+}
+function changeCurrentTimeOnClick(e) {
+    const rect = timelineContainer.getBoundingClientRect()
+    const percent = (e.offsetX / rect.width).toFixed(2);
+
+    player.currentTime(percent * player.duration());
+}
+
+let isMouseOver = false;
+let isMouseDown = false;
+
+
+function updateTimeline(e) {
+    let preview_position = 0;
+    if (e.type === 'timeupdate') {
+        progessTimeline();
+        if (!isMouseOver) {
+            preview_position = previewViaBuffer();
+        }
+    } else if (e.type === 'click') {
+        isMouseDown = false;
+        changeCurrentTimeOnClick(e)
+    } else if (e.type === 'mousemove' || e.type === 'mouseover') {
+        isMouseOver = true;
+        preview_position = previewViaMouseOverOrMove(e);
+        if (e.type === 'mousemove' && isMouseDown) {
+            changeCurrentTimeOnClick(e);
+        }
+    } else if (e.type === 'mouseout') {
+        isMouseOver = false;
+        isMouseDown = false;
+
+        preview_position = previewViaBuffer();
+    } else if (e.type === 'mousedown') {
+        isMouseDown = true;
+    } else if (e.type === 'mouseup') {
+        isMouseDown = false;
 
     }
+
+    if (preview_position != 0) {
+        timelineContainer.style.setProperty('--preview-position', preview_position);
+    }
 }
+
 
 export {
     togglePlay,
@@ -213,5 +253,4 @@ export {
     captionClickHandler,
     openSettings,
     updateTimeline,
-    manuallyUpdateTimeline
 }
