@@ -51,3 +51,4 @@ timelineContainer.addEventListener('mouseout',updateTimeline);
 
 timelineContainer.addEventListener('mousedown',updateTimeline);
 
+

@@ -191,12 +191,12 @@ function progessTimeline() {
 }
 function previewViaMouseOverOrMove(e) {
     const rect = timelineContainer.getBoundingClientRect()
-    const percent = (e.offsetX / rect.width);
+    const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width
     return percent;
 }
 function changeCurrentTimeOnClick(e) {
     const rect = timelineContainer.getBoundingClientRect()
-    const percent = (e.offsetX / rect.width).toFixed(2);
+    const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width
 
     player.currentTime(percent * player.duration());
 }
@@ -208,7 +208,9 @@ let isMouseDown = false;
 function updateTimeline(e) {
     let preview_position = 0;
     if (e.type === 'timeupdate') {
-        progessTimeline();
+        if (!isMouseDown) {
+            progessTimeline();
+        }
         if (!isMouseOver) {
             preview_position = previewViaBuffer();
         }
@@ -218,20 +220,22 @@ function updateTimeline(e) {
     } else if (e.type === 'mousemove' || e.type === 'mouseover') {
         isMouseOver = true;
         preview_position = previewViaMouseOverOrMove(e);
-        if (e.type === 'mousemove' && isMouseDown) {
+        if (isMouseDown && e.type === 'mousemove') {
             changeCurrentTimeOnClick(e);
-        }
-    } else if (e.type === 'mouseout') {
-        isMouseOver = false;
-        isMouseDown = false;
+            timelineContainer.style.setProperty('--progess-position', preview_position);
 
+        }
+    }
+    else if (e.type === 'mouseout') {
+        isMouseOver = false;
         preview_position = previewViaBuffer();
-    } else if (e.type === 'mousedown') {
+    }
+    else if (e.type === 'mousedown') {
         isMouseDown = true;
     } else if (e.type === 'mouseup') {
         isMouseDown = false;
-
     }
+
 
     if (preview_position != 0) {
         timelineContainer.style.setProperty('--preview-position', preview_position);
