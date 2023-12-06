@@ -13,11 +13,11 @@ export const player = videojs(
         var player = this;
         player.eme();
         player.src({
-            src: 'https://d33g7sdvsfd029.cloudfront.net/teachcode/admin/COURSE/8-380/media/1701627107565-2023-12-03-19-02-43.mp4',
-            // type: 'application/dash+xml',
-            // keySystems: {
-            //     'com.widevine.alpha': 'https://cwip-shaka-proxy.appspot.com/no_auth',
-            // }
+            src: 'https://cdn.bitmovin.com/content/assets/art-of-motion_drm/mpds/11331.mpd',
+            type: 'application/dash+xml',
+            keySystems: {
+                'com.widevine.alpha': 'https://cwip-shaka-proxy.appspot.com/no_auth',
+            }
         });
 
 

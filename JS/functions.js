@@ -1,5 +1,5 @@
 import { player } from "./../index.js";
-import { captionBtn, endTime, fullScreenBtn, myVideo, playBackSpeedBtn, settingsBtn, skipBackBtn, skipNextBtn, startTime, videoContainer, volumeBtn, volumeSlider } from "./instance.js";
+import { captionBtn, endTime, fullScreenBtn, myVideo, playBackSpeedBtn, settingsBtn, skipBackBtn, skipNextBtn, startTime, timelineContainer, videoContainer, volumeBtn, volumeSlider } from "./instance.js";
 
 // play / pause btn toggle
 function togglePlay() {
@@ -117,12 +117,12 @@ function formatTime(seconds) {
 
 // playback speed control
 function playBackSpeedHandler() {
-    const speedArr = [0.5, 1, 1.5, 2];
+    const speedArr = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
     let currentSpeed = player.playbackRate();
     if (currentSpeed === speedArr[speedArr.length - 1]) {
         currentSpeed = speedArr[0];
     } else {
-        currentSpeed += 0.5;
+        currentSpeed += 0.25;
     }
     player.playbackRate(currentSpeed);
     playBackSpeedBtn.innerHTML = currentSpeed + 'x';
@@ -159,23 +159,45 @@ function volumeIconToggle(e) {
 // caption on/off handler
 function captionClickHandler() {
     const length = player.textTracks().length;
-    if(length==0) {
+    if (length == 0) {
         captionBtn.disabled = true;
         return;
     }
-    if(captionBtn.classList.contains('show-caption')){
+    if (captionBtn.classList.contains('show-caption')) {
         player.textTracks()[myVideo.dataset.currentSub].mode = 'disabled';
         captionBtn.classList.remove('show-caption');
-    }else{
+    } else {
         player.textTracks()[myVideo.dataset.currentSub].mode = 'showing';
         captionBtn.classList.add('show-caption');
     }
 }
 
-function openSettings(){
+function openSettings() {
     settingsBtn.classList.toggle('open-box')
 }
 
+
+// timeline
+function updateTimeline() {
+    const progress = player.currentTime() / player.duration();
+    timelineContainer.style.setProperty('--progess-position', progress);
+
+    const bufferedRanges = player.buffered();
+    const preview = bufferedRanges.end(0) / player.duration();
+    timelineContainer.style.setProperty('--preview-position', preview);
+
+}
+
+function manuallyUpdateTimeline(e) {
+    const rect = timelineContainer.getBoundingClientRect()
+    const percent = (e.offsetX / rect.width);
+    if(e.type === 'click'){
+        player.currentTime(percent*player.duration());
+    }else if(e.type ==='mousemove'){
+        timelineContainer.style.setProperty('--preview-position', percent);
+
+    }
+}
 
 export {
     togglePlay,
@@ -189,5 +211,7 @@ export {
     volumeSliderHandler,
     volumeIconToggle,
     captionClickHandler,
-    openSettings
+    openSettings,
+    updateTimeline,
+    manuallyUpdateTimeline
 }

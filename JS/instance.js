@@ -12,6 +12,7 @@ const volumeBtn = document.querySelector('.mute-btn');
 const volumeSlider = document.querySelector('.mute-btn-range');
 const captionBtn = document.querySelector('.captions-btn');
 const settingsBtn = document.querySelector('.settings-btn');
+const timelineContainer = document.querySelector('.timeline-container');
 
 
 
@@ -31,5 +32,6 @@ export{
     volumeBtn,
     volumeSlider,
     captionBtn,
-    settingsBtn
+    settingsBtn,
+    timelineContainer
 }
