@@ -41,6 +41,9 @@ function handleKeyEvents(e) {
         case 'c':
             captionClickHandler()
             break;
+        case 's':
+            openSettings();
+            break;
         default:
             break;
     }

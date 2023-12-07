@@ -255,24 +255,22 @@ video,
 }
 
 .settings-container.open-box .settings-btn {
-  transform: rotate(50deg);
+  transform: rotate(45deg);
 }
 
 /* settings popover */
 .settings-popover {
   position: absolute;
-  background-color: #bdbbbb;
+  background-color: #d3d0d0;
   width: 100px;
   height: 60px;
-  top: calc(-100%);
-  left:-100%;
+  top: calc(-100% - 30px);
+  left: 5px;
   border-radius: 10px;
-  transform: scale(0);
   opacity: 0;
-  transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
+  transition: opacity 150ms ease-in-out;
 }
 .settings-container.open-box .settings-popover {
-  transform: scale(1) translate(50%, -50%);
   opacity: 1;
 }
 
