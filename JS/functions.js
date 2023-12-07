@@ -214,23 +214,34 @@ function updateTimeline(e) {
         if (!isMouseOver) {
             preview_position = previewViaBuffer();
         }
-    } else if (e.type === 'click') {
+    }
+    if (e.type === 'click') {
         isMouseDown = false;
         changeCurrentTimeOnClick(e)
-    } else if (e.type === 'mousemove' || e.type === 'mouseover') {
+    }
+    if (e.type === 'mousemove' || e.type === 'mouseover') {
         isMouseOver = true;
         preview_position = previewViaMouseOverOrMove(e);
         if (isMouseDown && e.type === 'mousemove') {
             changeCurrentTimeOnClick(e);
             timelineContainer.style.setProperty('--progess-position', preview_position);
         }
-    } else if (e.type === 'mouseout') {
+    }
+    if (e.type === 'mouseout') {
         isMouseOver = false;
         preview_position = previewViaBuffer();
-    } else if (e.type === 'mousedown') {
+        console.log('out')
+
+    }
+    if (e.type === 'mousedown') {
+        console.log('up11')
+
         isMouseDown = true;
-    } else if (e.type === 'mouseup') {
+    }
+    if (e.type === 'mouseup') {
         isMouseDown = false;
+        console.log('up')
+
     }
 
 

@@ -49,7 +49,7 @@ timelineContainer.addEventListener('mousemove',updateTimeline);
 timelineContainer.addEventListener('mouseover',updateTimeline);
 timelineContainer.addEventListener('mouseout',updateTimeline);
 timelineContainer.addEventListener('mousedown',updateTimeline);
-timelineContainer.addEventListener('mouseup',updateTimeline);
+document.addEventListener('mouseup',updateTimeline);
 
 
 
