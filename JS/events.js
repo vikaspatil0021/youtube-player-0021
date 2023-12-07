@@ -42,7 +42,7 @@ player.on('loadedmetadata',captionClickHandler);
 settingsBtn.addEventListener('click',openSettings);
 
 
-// timeline preview and progress
+// timeline preview and progress and preview-label
 player.on('timeupdate',updateTimeline);
 timelineContainer.addEventListener('click',updateTimeline);
 timelineContainer.addEventListener('mousemove',updateTimeline);
@@ -50,6 +50,7 @@ timelineContainer.addEventListener('mouseover',updateTimeline);
 timelineContainer.addEventListener('mouseout',updateTimeline);
 timelineContainer.addEventListener('mousedown',updateTimeline);
 document.addEventListener('mouseup',updateTimeline);
+
 
 
 

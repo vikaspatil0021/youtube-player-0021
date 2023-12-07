@@ -20,16 +20,16 @@ body {
   margin-inline: auto;
   background-color: #000;
   box-shadow: 0px 0px 100px -6px rgba(255, 255, 255, 0.3);
-  border-radius: 15px; 
-   user-select: none;
+  border-radius: 15px;
+  user-select: none;
 }
 
-video ,#my-video{
+video,
+#my-video {
   width: 100%;
   outline: none;
   border-radius: 15px;
 }
-
 
 /* controls container */
 .controls-container {
@@ -182,11 +182,11 @@ video ,#my-video{
   position: relative;
   background: #f2f2f2;
 }
-.mute-btn-range::-webkit-slider-thumb{
+.mute-btn-range::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 13px; 
-  height: 13px; 
-  background-color: #ff2a2a; 
+  width: 13px;
+  height: 13px;
+  background-color: #ff2a2a;
   border-radius: 50%;
   position: relative;
   cursor: pointer;
@@ -244,13 +244,36 @@ video ,#my-video{
   color: #666666 !important;
   cursor: not-allowed !important;
 }
+
+/* settings container */
+.settings-container {
+  position: relative;
+}
 /* settings icon */
 .settings-btn {
   transform: rotate(0);
 }
 
-.settings-btn.open-box {
-  transform: rotate(60deg);
+.settings-container.open-box .settings-btn {
+  transform: rotate(50deg);
+}
+
+/* settings popover */
+.settings-popover {
+  position: absolute;
+  background-color: #bdbbbb;
+  width: 100px;
+  height: 60px;
+  top: calc(-100%);
+  left:-100%;
+  border-radius: 10px;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
+}
+.settings-container.open-box .settings-popover {
+  transform: scale(1) translate(50%, -50%);
+  opacity: 1;
 }
 
 /* timline */
@@ -294,7 +317,7 @@ video ,#my-video{
   right: calc(100% - var(--progess-position) * 100%);
 }
 
-.timeline-thumb{
+.timeline-thumb {
   position: absolute;
   background: #ff2a2a;
   top: -50%;
@@ -305,8 +328,21 @@ video ,#my-video{
   display: flex;
   justify-content: center;
   right: calc(100% - var(--progess-position) * 100% - 4px);
-
 }
 .timeline-container:hover .timeline-thumb {
   width: 14px;
+}
+
+.timeline-label {
+  position: absolute;
+  display: none;
+  color: #f2f2f2;
+  font-weight: bold;
+  bottom: 20px;
+  right: calc(100% - var(--preview-position) * 100% - 12px);
+  text-shadow: -1px -4px 6px rgba(0, 0, 0, 0.75);
+  opacity: 0.9;
+}
+.timeline-container:hover .timeline-label {
+  display: block;
 }

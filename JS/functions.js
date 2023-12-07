@@ -1,5 +1,5 @@
 import { player } from "./../index.js";
-import { captionBtn, endTime, fullScreenBtn, myVideo, playBackSpeedBtn, settingsBtn, skipBackBtn, skipNextBtn, startTime, timelineContainer, video, videoContainer, volumeBtn, volumeSlider } from "./instance.js";
+import { captionBtn, endTime, fullScreenBtn, myVideo, playBackSpeedBtn, settingsContainer, skipBackBtn, skipNextBtn, startTime, timelineContainer, timelineLabel, video, videoContainer, volumeBtn, volumeSlider } from "./instance.js";
 
 // play / pause btn toggle
 function togglePlay() {
@@ -175,7 +175,7 @@ function captionClickHandler() {
 }
 
 function openSettings() {
-    settingsBtn.classList.toggle('open-box')
+    settingsContainer.classList.toggle('open-box')
 }
 
 
@@ -222,6 +222,8 @@ function updateTimeline(e) {
     if (e.type === 'mousemove' || e.type === 'mouseover') {
         isMouseOver = true;
         preview_position = previewViaMouseOverOrMove(e);
+
+        timelineLabel.innerHTML = formatTime((preview_position).toFixed(2) * player.duration());
         if (isMouseDown && e.type === 'mousemove') {
             changeCurrentTimeOnClick(e);
             timelineContainer.style.setProperty('--progess-position', preview_position);
@@ -230,22 +232,19 @@ function updateTimeline(e) {
     if (e.type === 'mouseout') {
         isMouseOver = false;
         preview_position = previewViaBuffer();
-        console.log('out')
 
     }
     if (e.type === 'mousedown') {
-        console.log('up11')
-
         isMouseDown = true;
     }
     if (e.type === 'mouseup') {
         isMouseDown = false;
-        console.log('up')
 
     }
 
 
     if (preview_position != 0) {
+
         timelineContainer.style.setProperty('--preview-position', preview_position);
     }
 }
