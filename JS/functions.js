@@ -185,9 +185,11 @@ function openSettings() {
 // timeline
 const segments = [
     { start: 0, end: 30 },
-    { start: 30, end: 90 },
-    { start: 90, end: 120 },
-    { start: 120, end: 210 }
+    { start: 30, end: 40 },
+    { start: 40, end: 150 },
+    { start: 150, end: 170 },
+    { start: 170, end: 210 }
+
 ];
 function previewViaBuffer() {
     const bufferedRanges = player.buffered();
@@ -295,7 +297,7 @@ function updateTimeline(e) {
 
         preview_position = previewViaMouseOverOrMove(e);
         timelineLabel.innerHTML = formatTime((preview_position).toFixed(2) * player.duration());
-        timelineLabel.style.left = preview_position *100 - 1 + "%";
+        timelineLabel.style.left = preview_position * 100 - 1 + "%";
 
         if (isMouseDown) {
             changeCurrentTimeOnClick(e);
@@ -330,7 +332,7 @@ function updateTimeline(e) {
         }
     })
 
-    if(preview_position !=0 ){
+    if (preview_position != 0) {
     }
 
 }
