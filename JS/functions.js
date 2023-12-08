@@ -213,7 +213,6 @@ function previewViaMouseOverOrMove(e) {
 function changeCurrentTimeOnClick(e) {
     const rect = timelineContainer.getBoundingClientRect()
     const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width
-    console.log(e.target, percent)
 
     player.currentTime(percent * player.duration());
 }
@@ -295,7 +294,6 @@ function updateTimeline(e) {
         isMouseOver = true;
 
         preview_position = previewViaMouseOverOrMove(e);
-        console.log(preview_position)
         timelineLabel.innerHTML = formatTime((preview_position).toFixed(2) * player.duration());
         timelineLabel.style.left = preview_position *100 - 1 + "%";
 
