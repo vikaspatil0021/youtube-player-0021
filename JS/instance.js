@@ -22,7 +22,8 @@ const timelineLabel = document.querySelector('.timeline-label');
 
 
 
-export{
+
+export {
     videoContainer,
     myVideo,
     video,

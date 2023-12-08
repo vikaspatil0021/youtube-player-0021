@@ -264,20 +264,21 @@ video,
   background-color: #d3d0d0;
   width: 100px;
   height: 60px;
-  top: calc(-100% - 30px);
-  left: 5px;
+  top: -100%;
+  left: -100%;
   border-radius: 10px;
-  opacity: 0;
-  transition: opacity 150ms ease-in-out;
+  transform: scale(0);
+  transition: transform 150ms ease-in-out;
+  z-index: 100;
 }
 .settings-container.open-box .settings-popover {
-  opacity: 1;
+  transform: scale(1) translate(50%,-50%);
 }
 
 /* timline */
 .timeline-container {
   position: relative;
-  height: 4px;
+  height: 3px;
   width: calc(100% - 20px);
   cursor: pointer;
   margin: 0px 10px 10px 10px;
@@ -285,62 +286,56 @@ video,
   align-items: center;
   transition: all 150ms ease-in-out;
 }
-.timeline-container:hover {
-  height: 7px;
-}
+
 
 .timeline {
   width: 100%;
   height: 100%;
   position: relative;
-  background-color: #6a6969;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
 }
 
-.timeline::before {
-  content: "";
+.timeline-segments  {
+  position: relative;
+  left: 0;
+  height: 5px;
+  margin-right: 3px;
+  background-color: #6a6969;
+  transition: height 150ms ease-in-out;
+}
+.timeline-segments-preview{
   position: absolute;
   left: 0;
   background: #f2f2f2d4;
   top: 0;
   bottom: 0;
-  right: calc(100% - var(--preview-position) * 100%);
+  z-index: 1;
 }
-.timeline::after {
-  content: "";
+.timeline-segments-progress {
   position: absolute;
   left: 0;
-  background: #ff2a2a;
+  background: #f84b4b;
   top: 0;
   bottom: 0;
-  right: calc(100% - var(--progess-position) * 100%);
+  z-index: 2;
+}
+.timeline-segments:hover{
+  height: 10px;
 }
 
-.timeline-thumb {
+.timeline-label{
   position: absolute;
-  background: #ff2a2a;
-  top: -50%;
-  bottom: 0;
-  height: 200%;
-  width: 8px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  right: calc(100% - var(--progess-position) * 100% - 4px);
-}
-.timeline-container:hover .timeline-thumb {
-  width: 14px;
-}
-
-.timeline-label {
   position: absolute;
-  display: none;
+  top: -35px;
   color: #f2f2f2;
+  display: none;
+  left: 75%;
   font-weight: bold;
-  bottom: 20px;
-  right: calc(100% - var(--preview-position) * 100% - 12px);
-  text-shadow: -1px -4px 6px rgba(0, 0, 0, 0.75);
-  opacity: 0.9;
 }
-.timeline-container:hover .timeline-label {
+
+.timeline:hover  .timeline-label{
   display: block;
 }

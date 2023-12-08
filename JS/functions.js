@@ -183,14 +183,27 @@ function openSettings() {
 
 
 // timeline
+const segments = [
+    { start: 0, end: 30 },
+    { start: 30, end: 90 },
+    { start: 90, end: 120 },
+    { start: 120, end: 210 }
+];
 function previewViaBuffer() {
     const bufferedRanges = player.buffered();
     const percent = bufferedRanges.end(0) / player.duration();
-    return percent;
+    return percent.toFixed(2);
 }
 function progessTimeline() {
-    const progress = player.currentTime() / player.duration();
-    timelineContainer.style.setProperty('--progess-position', progress);
+    const progressEles = document.querySelectorAll('.timeline-segments-progress');
+
+    segments.forEach((each, index) => {
+        if (each.end > player.currentTime()) {
+            progressEles[index].style.right = ((each.end - player.currentTime()) / (each.end - each.start)) * 100 + '%';
+        } else {
+            progressEles[index].style.right = 0;
+        }
+    })
 }
 function previewViaMouseOverOrMove(e) {
     const rect = timelineContainer.getBoundingClientRect()
@@ -200,6 +213,7 @@ function previewViaMouseOverOrMove(e) {
 function changeCurrentTimeOnClick(e) {
     const rect = timelineContainer.getBoundingClientRect()
     const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width
+    console.log(e.target, percent)
 
     player.currentTime(percent * player.duration());
 }
@@ -208,50 +222,142 @@ let isMouseOver = false;
 let isMouseDown = false;
 
 
+// function updateTimeline(e) {
+//     return;
+//     let preview_position = 0;
+//     if (e.type === 'timeupdate') {
+//         if (!isMouseDown) {
+//             progessTimeline();
+//         }
+//         if (!isMouseOver) {
+//             preview_position = previewViaBuffer();
+//         }
+//     }
+//     if (e.type === 'click') {
+//         isMouseDown = false;
+//         changeCurrentTimeOnClick(e)
+//     }
+//     if (e.type === 'mousemove' || e.type === 'mouseover') {
+//         isMouseOver = true;
+//         preview_position = previewViaMouseOverOrMove(e);
+
+//         timelineLabel.innerHTML = formatTime((preview_position).toFixed(2) * player.duration());
+//         if (isMouseDown && e.type === 'mousemove') {
+//             changeCurrentTimeOnClick(e);
+//             timelineContainer.style.setProperty('--progess-position', preview_position);
+//         }
+//     }
+//     if (e.type === 'mouseout') {
+//         isMouseOver = false;
+//         preview_position = previewViaBuffer();
+
+//     }
+//     if (e.type === 'mousedown') {
+//         isMouseDown = true;
+//     }
+//     if (e.type === 'mouseup') {
+//         isMouseDown = false;
+
+//     }
+
+
+//     if (preview_position != 0) {
+
+//         timelineContainer.style.setProperty('--preview-position', preview_position);
+//     }
+// }
 function updateTimeline(e) {
     let preview_position = 0;
+
     if (e.type === 'timeupdate') {
-        if (!isMouseDown) {
-            progessTimeline();
-        }
+        (!isMouseDown) && progessTimeline();
+
+
         if (!isMouseOver) {
-            preview_position = previewViaBuffer();
-        }
+            preview_position = previewViaBuffer()
+        };
     }
     if (e.type === 'click') {
         isMouseDown = false;
-        changeCurrentTimeOnClick(e)
+
+        changeCurrentTimeOnClick(e);
     }
-    if (e.type === 'mousemove' || e.type === 'mouseover') {
+
+    if (e.type === 'mouseover') {
         isMouseOver = true;
+
         preview_position = previewViaMouseOverOrMove(e);
 
         timelineLabel.innerHTML = formatTime((preview_position).toFixed(2) * player.duration());
-        if (isMouseDown && e.type === 'mousemove') {
-            changeCurrentTimeOnClick(e);
-            timelineContainer.style.setProperty('--progess-position', preview_position);
-        }
+
     }
-    if (e.type === 'mouseout') {
-        isMouseOver = false;
-        preview_position = previewViaBuffer();
+    if (e.type === 'mousemove') {
+        isMouseOver = true;
+
+        preview_position = previewViaMouseOverOrMove(e);
+        console.log(preview_position)
+        timelineLabel.innerHTML = formatTime((preview_position).toFixed(2) * player.duration());
+        timelineLabel.style.left = preview_position *100 - 1 + "%";
+
+        if (isMouseDown) {
+            changeCurrentTimeOnClick(e);
+            progessTimeline();
+        }
 
     }
     if (e.type === 'mousedown') {
         isMouseDown = true;
+
     }
     if (e.type === 'mouseup') {
         isMouseDown = false;
 
+
     }
 
+    if (e.type === 'mouseout') {
+        isMouseOver = false;
+        preview_position = previewViaBuffer()
 
-    if (preview_position != 0) {
-
-        timelineContainer.style.setProperty('--preview-position', preview_position);
     }
+    const previewEles = document.querySelectorAll('.timeline-segments-preview');
+
+
+
+    preview_position != 0 && segments.forEach((each, index) => {
+        if (each.end > (preview_position * player.duration())) {
+            previewEles[index].style.right = ((each.end - preview_position * player.duration()) / (each.end - each.start)) * 100 + '%';
+        } else {
+            previewEles[index].style.right = 0;
+        }
+    })
+
+    if(preview_position !=0 ){
+    }
+
 }
 
+function segmentsHandler() {
+
+    segments.forEach(each => {
+
+        const segmentDiv = document.createElement('div');
+        const previewEle = document.createElement('div')
+        const progressEle = document.createElement('div');
+        segmentDiv.classList.add('timeline-segments');
+        previewEle.classList.add('timeline-segments-preview');
+        progressEle.classList.add('timeline-segments-progress');
+
+        segmentDiv.style.width = (each.end - each.start) / player.duration() * 100 + "%";
+
+        const s = document.querySelector('.timeline');
+
+        segmentDiv.append(previewEle);
+        segmentDiv.append(progressEle)
+        s.append(segmentDiv);
+
+    })
+}
 
 export {
     togglePlay,
@@ -267,4 +373,5 @@ export {
     captionClickHandler,
     openSettings,
     updateTimeline,
+    segmentsHandler
 }
