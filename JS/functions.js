@@ -1,5 +1,5 @@
 import { player } from "./../index.js";
-import { captionBtn, endTime, fullScreenBtn, myVideo, playBackSpeedBtn, settingsContainer, skipBackBtn, skipNextBtn, startTime, timelineContainer, timelineLabel, video, videoContainer, volumeBtn, volumeSlider } from "./instance.js";
+import { captionBtn, endTime, fullScreenBtn, playBackSpeedBtn, settingsContainer, skipBackBtn, skipNextBtn, startTime, subtitleOptions, timelineContainer, timelineLabel, video, videoContainer, volumeBtn, volumeSlider } from "./instance.js";
 
 // play / pause btn toggle
 function togglePlay() {
@@ -169,10 +169,10 @@ function captionClickHandler() {
         return;
     }
     if (captionBtn.classList.contains('show-caption')) {
-        player.textTracks()[myVideo.dataset.currentSub].mode = 'disabled';
+        player.textTracks()[videoContainer.dataset.currentSub].mode = 'disabled';
         captionBtn.classList.remove('show-caption');
     } else {
-        player.textTracks()[myVideo.dataset.currentSub].mode = 'showing';
+        player.textTracks()[videoContainer.dataset.currentSub].mode = 'showing';
         captionBtn.classList.add('show-caption');
     }
 }
@@ -184,17 +184,23 @@ function openSettings() {
 
 // timeline
 const segments = [
-    { start: 0, end: 30 },
-    { start: 30, end: 40 },
-    { start: 40, end: 150 },
-    { start: 150, end: 170 },
-    { start: 170, end: 210 }
+    { start: 0, end: 30, label: 'JS Basics' },
+    { start: 30, end: 60, label: 'Event Handling' },
+    { start: 60, end: 90, label: 'DOM Manipulation' },
+    { start: 90, end: 120, label: 'AJAX Requests' },
+    { start: 120, end: 180, label: 'Promises' },
+    { start: 180, end: 210, label: 'Async/Await' },
+]
 
-];
+
+let isMouseOver = false;
+let isMouseDown = false;
+let currentLabel = segments[0].label
+
 function previewViaBuffer() {
     const bufferedRanges = player.buffered();
     const percent = bufferedRanges.end(0) / player.duration();
-    return percent.toFixed(2);
+    return percent;
 }
 function progessTimeline() {
     const progressEles = document.querySelectorAll('.timeline-segments-progress');
@@ -202,6 +208,7 @@ function progessTimeline() {
     segments.forEach((each, index) => {
         if (each.end > player.currentTime()) {
             progressEles[index].style.right = ((each.end - player.currentTime()) / (each.end - each.start)) * 100 + '%';
+
         } else {
             progressEles[index].style.right = 0;
         }
@@ -219,8 +226,18 @@ function changeCurrentTimeOnClick(e) {
     player.currentTime(percent * player.duration());
 }
 
-let isMouseOver = false;
-let isMouseDown = false;
+function setCurrentLabel(preview_position) {
+    let currentPos = preview_position * player.duration()
+    preview_position != 0 && segments.forEach((each, index) => {
+        if (each.start < currentPos && each.end > currentPos) {
+            currentLabel = each.label;
+        }
+    })
+
+    timelineLabel.innerHTML = `<div>${currentLabel}</div> <div>${formatTime((preview_position).toFixed(2) * player.duration())}</div>`;
+
+}
+
 
 
 // function updateTimeline(e) {
@@ -279,9 +296,9 @@ function updateTimeline(e) {
         };
     }
     if (e.type === 'click') {
+        changeCurrentTimeOnClick(e);
         isMouseDown = false;
 
-        changeCurrentTimeOnClick(e);
     }
 
     if (e.type === 'mouseover') {
@@ -289,15 +306,15 @@ function updateTimeline(e) {
 
         preview_position = previewViaMouseOverOrMove(e);
 
-        timelineLabel.innerHTML = formatTime((preview_position).toFixed(2) * player.duration());
-
     }
     if (e.type === 'mousemove') {
         isMouseOver = true;
 
         preview_position = previewViaMouseOverOrMove(e);
-        timelineLabel.innerHTML = formatTime((preview_position).toFixed(2) * player.duration());
-        timelineLabel.style.left = preview_position * 100 - 1 + "%";
+        timelineLabel.style.setProperty('--label-percent', preview_position)
+        timelineLabel.style.setProperty('--label-width', timelineLabel.offsetWidth / 2)
+
+        setCurrentLabel(preview_position)
 
         if (isMouseDown) {
             changeCurrentTimeOnClick(e);
@@ -310,8 +327,9 @@ function updateTimeline(e) {
 
     }
     if (e.type === 'mouseup') {
-        isMouseDown = false;
 
+        isMouseDown = false;
+        preview_position = previewViaBuffer()
 
     }
 
@@ -332,10 +350,10 @@ function updateTimeline(e) {
         }
     })
 
-    if (preview_position != 0) {
-    }
 
 }
+
+
 
 function segmentsHandler() {
 
@@ -348,7 +366,7 @@ function segmentsHandler() {
         previewEle.classList.add('timeline-segments-preview');
         progressEle.classList.add('timeline-segments-progress');
 
-        segmentDiv.style.width = (each.end - each.start) / player.duration() * 100 + "%";
+        segmentDiv.style.width = (each.end - each.start) / player.duration() * 100 - .2 + "%";
 
         const s = document.querySelector('.timeline');
 
@@ -359,6 +377,47 @@ function segmentsHandler() {
     })
 }
 
+
+
+
+const sub = [
+    "English-US",
+    "English-IN",
+
+]
+
+function addSubtitlesHandler() {
+
+    sub && sub.forEach((each, index) => {
+        const div = document.createElement('span');
+        div.innerHTML = each;
+        div.id = 'sub-' + index;
+        if (index == 0) div.classList.add('active-sub');
+        div.addEventListener('click',changeSubtitle)
+        subtitleOptions.append(div)
+
+    })
+
+}
+
+
+function changeSubtitle(e) {
+    const id = e.target.id;
+    player.textTracks()[videoContainer.dataset.currentSub].mode = 'disabled';
+
+    const activeSub = document.querySelector('.active-sub');
+    if(activeSub){
+        activeSub.classList.remove('active-sub')
+    }
+
+    const selectSub = document.querySelector('#' + id);
+    selectSub.classList.add('active-sub');
+
+    videoContainer.dataset.currentSub = id.substring(4);
+    player.textTracks()[videoContainer.dataset.currentSub].mode = 'showing';
+    openSettings()
+
+}
 export {
     togglePlay,
     handleKeyEvents,
@@ -373,5 +432,6 @@ export {
     captionClickHandler,
     openSettings,
     updateTimeline,
-    segmentsHandler
+    segmentsHandler,
+    addSubtitlesHandler
 }

@@ -13,7 +13,7 @@ export const player = videojs(
         var player = this;
         player.eme();
         player.src({
-            src: 'https://cdn.bitmovin.com/content/assets/art-of-motion_drm/mpds/11331.mpd',
+                    src: 'https://cdn.bitmovin.com/content/assets/art-of-motion_drm/mpds/11331.mpd',
             type: 'application/dash+xml',
             keySystems: {
                 'com.widevine.alpha': 'https://cwip-shaka-proxy.appspot.com/no_auth',

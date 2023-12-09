@@ -1,5 +1,5 @@
 import { player } from "../index.js";
-import { captionClickHandler, fullScreenHandler, handleKeyEvents, miniPlayerHandler, openSettings, playBackSpeedHandler, segmentsHandler, setDurationHandler, startTimeHandler, togglePlay, toggleVolumeBtn, updateTimeline, volumeIconToggle, volumeSliderHandler } from "./functions.js";
+import { addSubtitlesHandler, captionClickHandler, fullScreenHandler, handleKeyEvents, miniPlayerHandler, openSettings, playBackSpeedHandler, segmentsHandler, setDurationHandler, startTimeHandler, togglePlay, toggleVolumeBtn, updateTimeline, volumeIconToggle, volumeSliderHandler } from "./functions.js";
 import { captionBtn, fullScreenBtn, miniPlayerBtn, playBackSpeedBtn, playPauseBtn, settingsBtn, timelineContainer, volumeBtn, volumeSlider } from "./instance.js";
 
 // play/pause toggle
@@ -54,6 +54,10 @@ document.addEventListener('mouseup',updateTimeline);
 
 // add segments on loaded metadata
 player.on('loadedmetadata',segmentsHandler);
+
+// add subtitles on loaded metadata
+player.on('loadedmetadata',addSubtitlesHandler);
+
 
 
 

@@ -1,5 +1,4 @@
 const videoContainer = document.querySelector('.video-container');
-const myVideo = document.querySelector('#my-video');
 const video = document.querySelector('video');
 const fullScreenBtn = document.querySelector('.full-screen-btn');
 const playPauseBtn = document.querySelector('.play-pause-btn');
@@ -16,6 +15,8 @@ const settingsBtn = document.querySelector('.settings-btn');
 const settingsContainer = document.querySelector('.settings-container');
 const timelineContainer = document.querySelector('.timeline-container');
 const timelineLabel = document.querySelector('.timeline-label');
+const subtitleOptions = document.querySelector('.settings-popover-sub-options');
+
 
 
 
@@ -25,7 +26,6 @@ const timelineLabel = document.querySelector('.timeline-label');
 
 export {
     videoContainer,
-    myVideo,
     video,
     fullScreenBtn,
     playPauseBtn,
@@ -41,5 +41,6 @@ export {
     settingsBtn,
     settingsContainer,
     timelineContainer,
-    timelineLabel
+    timelineLabel,
+    subtitleOptions,
 }
