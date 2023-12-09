@@ -184,13 +184,19 @@ function openSettings() {
 
 // timeline
 const segments = [
-    { start: 0, end: 30, label: 'JS Basics' },
-    { start: 30, end: 60, label: 'Event Handling' },
-    { start: 60, end: 90, label: 'DOM Manipulation' },
-    { start: 90, end: 120, label: 'AJAX Requests' },
-    { start: 120, end: 180, label: 'Promises' },
-    { start: 180, end: 210, label: 'Async/Await' },
-]
+    { start: 0, end: 30, label: 'Introduction' },
+    { start: 30, end: 70, label: 'Basic Concepts' },
+    { start: 70, end: 120, label: 'Coding Examples' },
+    { start: 120, end: 160, label: 'Error Handling' },
+    { start: 160, end: 200, label: 'Optimizing Performance' },
+    { start: 200, end: 240, label: 'Testing Strategies' },
+    { start: 240, end: 290, label: 'Frameworks Overview' },
+    { start: 290, end: 340, label: 'Deployment Strategies' },
+    { start: 340, end: 390, label: 'Security Measures' },
+    { start: 390, end: 596, label: 'Conclusion and Q&A' },
+];
+
+
 
 
 let isMouseOver = false;
