@@ -350,9 +350,9 @@ function updateTimeline(e) {
 
     preview_position != 0 && segments.forEach((each, index) => {
         if (each.end > (preview_position * player.duration())) {
-            previewEles[index].style.right = ((each.end - preview_position * player.duration()) / (each.end - each.start)) * 100 + '%';
+            previewEles[index]?.style.right = ((each.end - preview_position * player.duration()) / (each.end - each.start)) * 100 + '%';
         } else {
-            previewEles[index].style.right = 0;
+            previewEles[index]?.style.right = 0;
         }
     })
 
