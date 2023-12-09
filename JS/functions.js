@@ -350,9 +350,15 @@ function updateTimeline(e) {
 
     preview_position != 0 && segments.forEach((each, index) => {
         if (each.end > (preview_position * player.duration())) {
-            previewEles[index]?.style.right = ((each.end - preview_position * player.duration()) / (each.end - each.start)) * 100 + '%';
+            if (previewEles[index]) {
+
+                previewEles[index].style.right = ((each.end - preview_position * player.duration()) / (each.end - each.start)) * 100 + '%';
+            }
         } else {
-            previewEles[index]?.style.right = 0;
+            if (previewEles[index]) {
+
+                previewEles[index].style.right = 0;
+            }
         }
     })
 
@@ -399,7 +405,7 @@ function addSubtitlesHandler() {
         div.innerHTML = each;
         div.id = 'sub-' + index;
         if (index == 0) div.classList.add('active-sub');
-        div.addEventListener('click',changeSubtitle)
+        div.addEventListener('click', changeSubtitle)
         subtitleOptions.append(div)
 
     })
@@ -412,7 +418,7 @@ function changeSubtitle(e) {
     player.textTracks()[videoContainer.dataset.currentSub].mode = 'disabled';
 
     const activeSub = document.querySelector('.active-sub');
-    if(activeSub){
+    if (activeSub) {
         activeSub.classList.remove('active-sub')
     }
 
