@@ -382,7 +382,7 @@ function segmentsHandler() {
 
 const sub = [
     "English-US",
-    "English-IN",
+    "Hindi-IN",
 
 ]
 
