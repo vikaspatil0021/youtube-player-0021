@@ -6,7 +6,6 @@
 
 body {
   margin: 100px 0 0 0;
-  display: flex;
   background-color: #777;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
@@ -391,4 +390,23 @@ video,
 
 .timeline:hover  .timeline-label{
   display: flex;
+}
+
+
+
+
+table {
+  border-collapse: collapse;
+  width: 400px;
+  margin-bottom: 10px;
+}
+
+th, td {
+  border: 1px solid #333;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #666;
 }
